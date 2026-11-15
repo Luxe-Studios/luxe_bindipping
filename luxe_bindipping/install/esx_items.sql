@@ -1,0 +1,30 @@
+-- Luxe Bin Dipping - items for ESX servers using the DEFAULT ESX inventory.
+-- Not needed if you use ox_inventory (add items to ox_inventory/data/items.lua instead).
+-- Cash ('money') is paid as ESX cash and does not need an item.
+INSERT IGNORE INTO `items` (`name`, `label`, `weight`) VALUES
+    ('garbage', 'Garbage', 1),
+    ('paperbag', 'Paper Bag', 1),
+    ('plastic', 'Plastic', 1),
+    ('glass', 'Glass', 1),
+    ('rubber', 'Rubber', 1),
+    ('metalscrap', 'Metal Scrap', 1),
+    ('aluminum', 'Aluminium', 1),
+    ('copper', 'Copper', 1),
+    ('water', 'Water', 1),
+    ('sprunk', 'Sprunk', 1),
+    ('sandwich', 'Sandwich', 1),
+    ('lockpick', 'Lockpick', 1),
+    ('screwdriverset', 'Screwdriver Set', 1),
+    ('iron', 'Iron', 1),
+    ('steel', 'Steel', 1),
+    ('radio', 'Radio', 1),
+    ('goldchain', 'Gold Chain', 1),
+    ('10kgoldchain', '10k Gold Chain', 1),
+    ('rolex', 'Rolex', 1),
+    ('electronickit', 'Electronic Kit', 1),
+    ('advancedlockpick', 'Advanced Lockpick', 1),
+    ('toaster', 'Toaster', 2),
+    ('diamond_ring', 'Diamond Ring', 1),
+    ('diamond', 'Diamond', 1),
+    ('goldbar', 'Gold Bar', 2),
+    ('small_tv', 'Small TV', 3);

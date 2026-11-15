@@ -1,0 +1,10 @@
+{
+    "radial_label": "Reputation",
+    "menu_title": "Reputation",
+    "no_rep": "No reputation yet",
+    "rep_entry": "%s · Lvl %d %s",
+    "rep_progress": "%d / %d rep to %s",
+    "rep_max": "%d rep · Max level",
+    "rep_only": "%d rep",
+    "cmd_rep": "View all your reputation"
+}
