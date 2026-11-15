@@ -13,6 +13,7 @@ Config.ItemOverrides = {
     qbx = {},
     qb  = { water = 'water_bottle', sprunk = 'kurkakola' },
     esx = {},
+    tmc = {}, ---@todo add tmc defualt item names
 }
 
 -- Props that can be searched

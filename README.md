@@ -4,7 +4,7 @@
 
 # Luxe Bin Dipping
 
-Free bin dipping script for FiveM with a **reputation system**. Search bins, level up, find better loot, and watch out for dirty needles. Supports **Qbox, QBCore and ESX**, detected automatically.
+Free bin dipping script for FiveM with a **reputation system**. Search bins, level up, find better loot, and watch out for dirty needles. Supports **Qbox, QBCore, ESX and TMC**, detected automatically.
 
 **By [Luxe Studios](https://luxestudios.shop)** · Free & open source (GPL-3.0)
 

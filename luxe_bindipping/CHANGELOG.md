@@ -1,7 +1,7 @@
 # Changelog
 
 ## 1.1.0
-- Multi-framework support: Qbox, QBCore and ESX Legacy (auto-detected)
+- Multi-framework support: Qbox, QBCore, ESX Legacy and TMC v2 (auto-detected)
 - Inventory support: ox_inventory, qb-inventory (and forks), default ESX inventory
 - Target support: ox_target and qb-target
 - `Config.ItemOverrides` to rename loot items per framework
