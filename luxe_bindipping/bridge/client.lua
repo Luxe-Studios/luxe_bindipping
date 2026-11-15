@@ -129,7 +129,7 @@ function Bridge.AddTargetModel(models, opt)
             Title = opt.label,
             Description = locale('title'),
             Icon = 'fa-solid fa-dumpster',
-            AutoComplete = false,
+            AutoComplete = true, -- pressing E searches straight away
             Complete = function()
                 local ent = nearest
                 if ent and DoesEntityExist(ent) and (not opt.canInteract or opt.canInteract(ent)) then opt.onSelect(ent) end
