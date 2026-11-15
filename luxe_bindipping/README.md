@@ -1,6 +1,6 @@
 # Luxe Bin Dipping
 
-**by Luxe Studios** · works with **Qbox**, **QBCore** and **ESX**, detected automatically
+**by Luxe Studios** · works with **Qbox**, **QBCore**, **ESX** and **TMC v2**, detected automatically
 
 Players search bins and dumpsters around the city for loot. Every search earns **reputation**. The more rep a player has, the higher their level, and the better their loot: more items per bin, fewer empty bins, and access to rare and legendary finds. There's also a configurable chance of being stabbed by a dirty needle, with drug-style effects.
 
@@ -31,7 +31,7 @@ Plus **one** of each (the script detects which you have):
 
 | Type | Supported |
 |---|---|
-| Framework | `qbx_core` (Qbox), `qb-core` (QBCore), `es_extended` (ESX Legacy **1.9+**) |
+| Framework | `qbx_core` (Qbox), `qb-core` (QBCore), `es_extended` (ESX Legacy **1.9+**), `core` (TMC v2) |
 | Inventory | `ox_inventory` (any framework), `qb-inventory` (and forks like ps / lj), default ESX inventory |
 | Target | `ox_target`, `qb-target` |
 
@@ -184,6 +184,7 @@ Missing files fall back to English. Pull requests with new languages are welcome
 Rep is saved in the player's character data under the key **`bindipping_rep`**:
 - **Qbox / QBCore:** player metadata
 - **ESX:** `xPlayer.getMeta` / `setMeta` (ESX Legacy 1.9+)
+- **TMC** player metadata
 
 Other scripts can read it on any framework with the server export below.
 
