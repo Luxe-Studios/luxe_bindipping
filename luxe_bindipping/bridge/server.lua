@@ -10,6 +10,7 @@ local function detectFramework()
     if started('qbx_core') then return 'qbx' end
     if started('qb-core') then return 'qb' end
     if started('es_extended') then return 'esx' end
+    if started('core') and pcall(function() exports.core:getCoreObject() end) then return 'tmc' end
 end
 
 local function detectInventory()
@@ -18,16 +19,19 @@ local function detectInventory()
     if started('ox_inventory') then return 'ox' end
     if Bridge.framework == 'qb' then return 'qb' end
     if Bridge.framework == 'esx' then return 'esx' end
+    if Bridge.framework == 'tmc' then return 'tmc' end
 end
 
 Bridge.framework = detectFramework()
 Bridge.inventory = detectInventory()
 
-local QB, ESX
+local QB, ESX, TMC
 if Bridge.framework == 'qb' then
     QB = exports['qb-core']:GetCoreObject()
 elseif Bridge.framework == 'esx' then
     ESX = exports.es_extended:getSharedObject()
+elseif Bridge.framework == 'tmc' then
+    TMC = exports.core:getCoreObject()
 end
 
 if not Bridge.framework then
@@ -53,6 +57,9 @@ function Bridge.GetRep(src, key)
     elseif Bridge.framework == 'esx' then
         local xPlayer = ESX.GetPlayerFromId(src)
         value = xPlayer and xPlayer.getMeta(key)
+    elseif Bridge.framework == 'tmc' then
+        local player = TMC.Functions.GetPlayer(src)
+        value = player and player.PlayerData.metadata[key] -- Missing docs on this so might not work
     end
     return tonumber(value) or 0
 end
@@ -66,6 +73,9 @@ function Bridge.SetRep(src, key, value)
     elseif Bridge.framework == 'esx' then
         local xPlayer = ESX.GetPlayerFromId(src)
         if xPlayer then xPlayer.setMeta(key, value) end
+    elseif Bridge.framework == 'tmc' then
+        local player = TMC.Functions.GetPlayer(src)
+        if player then player.Functions.SetMetaData(key, value) end
     end
 end
 
@@ -77,6 +87,7 @@ function Bridge.ItemExists(name)
     if Bridge.inventory == 'ox' then return exports.ox_inventory:Items(name) ~= nil end
     if Bridge.inventory == 'qb' then return QB.Shared.Items[name] ~= nil end
     if Bridge.inventory == 'esx' then return ESX.GetItemLabel(name) ~= nil end
+    if Bridge.inventory == 'tmc' then return TMC.Shared.Items[name] ~= nil end -- Missing docs also so might not work
     return false
 end
 
@@ -90,6 +101,9 @@ function Bridge.ItemLabel(name)
         return item and item.label or name
     elseif Bridge.inventory == 'esx' then
         return ESX.GetItemLabel(name) or name
+    elseif Bridge.inventory == 'tmc' then -- Missing docs so might not work
+        local item = TMC.Shared.Items[name]
+        return item and item.label or name
     end
     return name
 end
@@ -107,6 +121,8 @@ function Bridge.CanCarry(src, name, count)
     elseif Bridge.inventory == 'esx' then
         local xPlayer = ESX.GetPlayerFromId(src)
         return xPlayer and xPlayer.canCarryItem(name, count)
+    elseif Bridge.inventory == 'tmc' then
+      return true -- Missing docs again -- might just be like the qb-inventory method -- addItem function hopefully just returns false for canCarry
     end
     return false
 end
@@ -129,6 +145,13 @@ function Bridge.AddItem(src, name, count)
         if isCash(name) then xPlayer.addMoney(count) return true end
         xPlayer.addInventoryItem(name, count)
         return true
+    elseif Bridge.Framework == 'tmc' then
+        local player = TMC.Functions.GetPlayer(src)
+        if not player then return false end
+        if isCash(name) then return player.Functions.AddMoney('cash', count, 'bin-dipping') end
+        local added = player.Functions.AddItem(name, count)
+        -- Notification might be needed like qb-inventory ItemBox
+        return added
     end
     return false
 end
