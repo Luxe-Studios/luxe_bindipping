@@ -11,6 +11,7 @@ local function getRep(src) return Bridge.GetRep(src, REP_KEY) end
 local function setRep(src, rep) Bridge.SetRep(src, REP_KEY, rep) end
 
 exports('GetRep', getRep)
+exports('GetLevels', function() return Config.Levels end)
 
 local function weightedPick(weights)
     local total = 0

@@ -1,11 +1,17 @@
 Config = {}
 
-Config.Debug = false -- true = print why a search failed to the server console
+Config.Debug = false -- prints why a search failed to the server console (set false when live)
 
 -- Framework / inventory / target. Leave on 'auto' to detect automatically.
-Config.Framework = 'auto' -- 'auto' | 'qbx' | 'qb' | 'esx'
-Config.Inventory = 'auto' -- 'auto' | 'ox' | 'qb' | 'esx'   (qb = qb-inventory / ps / lj, esx = default ESX inventory)
-Config.Target    = 'auto' -- 'auto' | 'ox' | 'qb'
+Config.Framework = 'auto' -- 'auto' | 'qbx' | 'qb' | 'esx' | 'tmc'
+Config.Inventory = 'auto' -- 'auto' | 'ox' | 'qb' | 'esx' | 'tmc'   (qb = qb-inventory / ps / lj, esx = default ESX inventory)
+Config.Target    = 'auto' -- 'auto' | 'ox' | 'qb' | 'tmc'   (tmc = TMC's own prompts)
+
+-- TMC only: rep is saved in TMC's built-in reputation system
+Config.TMC = {
+    repType     = 'bindipping',
+    repCategory = 'Civilian',
+}
 
 -- Rename loot items per framework if your items are called something different.
 -- Example: QBCore calls water 'water_bottle'. 'money' is always given as cash.
@@ -13,6 +19,7 @@ Config.ItemOverrides = {
     qbx = {},
     qb  = { water = 'water_bottle', sprunk = 'kurkakola' },
     esx = {},
+    tmc = { aluminum = 'aluminium', ['10kgoldchain'] = '10ctgoldchain', water = 'water_bottle', sprunk = 'sprunk_can', paperbag = 'garbage', toaster = 'metalscrap', small_tv = 'laptop' },
 }
 
 -- Props that can be searched

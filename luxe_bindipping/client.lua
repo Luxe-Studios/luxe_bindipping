@@ -15,7 +15,7 @@ local function needleStick()
     local alreadyAffected = needleEndsAt > GetGameTimer()
     needleEndsAt = GetGameTimer() + cfg.duration * 1000
 
-    lib.notify({ title = locale('ouch'), description = locale('needle_stick'), type = 'error', duration = 7000 })
+    Bridge.Notify(locale('ouch'), locale('needle_stick'), 'error', 7000)
     damagePed(cfg.damage)
 
     if cfg.ragdoll then SetPedToRagdoll(cache.ped, 2500, 2500, 0, false, false, false) end
@@ -50,7 +50,7 @@ local function needleStick()
             ResetPedMovementClipset(cache.ped, 1.0)
             RemoveAnimSet(cfg.walkStyle)
         end
-        lib.notify({ title = locale('title'), description = locale('needle_worn_off'), type = 'inform' })
+        Bridge.Notify(locale('title'), locale('needle_worn_off'), 'inform')
     end)
 end
 
@@ -71,7 +71,7 @@ local function searchBin(entity)
 
     local ok, reason = lib.callback.await('luxe_bindipping:start', false, id, coords)
     if not ok then
-        return lib.notify({ title = locale('title'), description = locale(reason), type = 'error' })
+        return Bridge.Notify(locale('title'), locale(reason), 'error')
     end
 
     searching = true
@@ -79,18 +79,15 @@ local function searchBin(entity)
     if Config.UseSkillCheck and not lib.skillCheck({ 'easy', 'easy' }, { 'e' }) then
         searching = false
         lib.callback.await('luxe_bindipping:cancel', false)
-        return lib.notify({ title = locale('title'), description = locale('fumbled'), type = 'error' })
+        return Bridge.Notify(locale('title'), locale('fumbled'), 'error')
     end
 
     TaskTurnPedToFaceEntity(cache.ped, entity, 800)
     Wait(800)
 
-    local done = lib.progressBar({
+    local done = Bridge.Progress({
         duration = Config.SearchTime,
         label = locale('searching'),
-        useWhileDead = false,
-        canCancel = true,
-        disable = { move = true, car = true, combat = true },
         anim = { dict = 'amb@prop_human_bum_bin@idle_b', clip = 'idle_d', flag = 1 },
     })
 
@@ -98,12 +95,12 @@ local function searchBin(entity)
 
     if not done then
         lib.callback.await('luxe_bindipping:cancel', false)
-        return lib.notify({ title = locale('title'), description = locale('stopped'), type = 'inform' })
+        return Bridge.Notify(locale('title'), locale('stopped'), 'inform')
     end
 
     local result = lib.callback.await('luxe_bindipping:finish', false)
     if not result then
-        return lib.notify({ title = locale('title'), description = locale('search_failed'), type = 'error' })
+        return Bridge.Notify(locale('title'), locale('search_failed'), 'error')
     end
 
     if result.needled then
@@ -112,33 +109,24 @@ local function searchBin(entity)
 
     if result.injured then
         SetEntityHealth(cache.ped, GetEntityHealth(cache.ped) - Config.InjuryDamage)
-        lib.notify({ title = locale('ouch'), description = locale('cut_hand'), type = 'error' })
+        Bridge.Notify(locale('ouch'), locale('cut_hand'), 'error')
     end
 
     if #result.found == 0 then
-        lib.notify({ title = locale('title'), description = locale('nothing_found'), type = 'inform' })
+        Bridge.Notify(locale('title'), locale('nothing_found'), 'inform')
     else
         local lines = {}
         for i = 1, #result.found do
             local f = result.found[i]
             lines[i] = ('%dx %s'):format(f.count, f.label)
         end
-        lib.notify({ title = locale('you_found'), description = table.concat(lines, ', '), type = 'success', duration = 6000 })
+        Bridge.Notify(locale('you_found'), table.concat(lines, ', '), 'success', 6000)
     end
 
-    lib.notify({
-        title = locale('title'),
-        description = locale('rep_gained', result.gained, result.rep),
-        type = 'success',
-    })
+    Bridge.Notify(locale('title'), locale('rep_gained', result.gained, result.rep), 'success')
 
     if result.levelUp then
-        lib.notify({
-            title = locale('level_up'),
-            description = locale('level_up_desc', result.levelLabel),
-            type = 'success',
-            duration = 7000,
-        })
+        Bridge.Notify(locale('level_up'), locale('level_up_desc', result.levelLabel), 'success', 7000)
     end
 end
 
@@ -162,15 +150,10 @@ RegisterCommand('binrep', function()
         desc = locale('rep_progress', rep, nextLevel.rep, nextLevel.label)
     end
 
-    lib.registerContext({
-        id = 'luxe_bindipping_rep',
-        title = locale('rep_menu_title'),
-        options = {
-            { title = locale('rep_level', idx, level.label), description = desc, icon = 'dumpster', progress = progress, colorScheme = 'pink', readOnly = true },
-            { title = locale('rep_total', rep), icon = 'star', readOnly = true },
-        },
+    Bridge.InfoMenu('luxe_bindipping_rep', locale('rep_menu_title'), {
+        { title = locale('rep_level', idx, level.label), description = desc, icon = 'dumpster', progress = progress },
+        { title = locale('rep_total', rep), icon = 'star' },
     })
-    lib.showContext('luxe_bindipping_rep')
 end, false)
 
 TriggerEvent('chat:addSuggestion', '/binrep', locale('cmd_binrep'))

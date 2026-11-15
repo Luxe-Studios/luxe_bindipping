@@ -4,7 +4,7 @@
 
 # Luxe Bin Dipping
 
-Free bin dipping script for FiveM with a **reputation system**. Search bins, level up, find better loot, and watch out for dirty needles. Supports **Qbox, QBCore and ESX**, detected automatically.
+Free bin dipping script for FiveM with a **reputation system**. Search bins, level up, find better loot, and watch out for dirty needles. Supports **Qbox, QBCore, ESX and TMC**, detected automatically.
 
 **By [Luxe Studios](https://luxestudios.shop)** · Free & open source (GPL-3.0)
 
@@ -17,7 +17,8 @@ Free bin dipping script for FiveM with a **reputation system**. Search bins, lev
 - 💉 **Dirty needle sticks** (20% by default): damage, trippy screen, camera shake, drunk walk, no sprinting for 3 minutes. Everything is configurable.
 - 📊 **Reputation menu** on the radial menu (`luxe_reputation`) and `/binrep`
 - 🔒 **Server-side loot and rep** with distance, timing and cooldown checks
-- 🔌 **Multi-framework**: Qbox / QBCore / ESX, ox_inventory / qb-inventory / ESX inventory, ox_target / qb-target
+- 🔌 **Multi-framework**: Qbox / QBCore / ESX / **TMC**, ox_inventory / qb-inventory / ESX inventory / TMC inventory, ox_target / qb-target / TMC prompts
+- 🧩 **TMC native**: TMC prompts, notifications, progress bar and menus, and rep saved in TMC's built-in reputation (shows under Civilian)
 - 🌍 **Translatable** via ox_lib locales
 - ⚡ **0.00ms idle**
 
@@ -36,6 +37,7 @@ Free bin dipping script for FiveM with a **reputation system**. Search bins, lev
    ensure luxe_reputation
    ```
 4. ESX with the default inventory: run `luxe_bindipping/install/esx_items.sql`.
+   TMC: make sure `ox_lib` (and its `cfxlua-require` dependency) is started before the script. `luxe_reputation` isn't needed on TMC - rep shows in TMC's own reputation UI.
 5. ox_inventory users: disable the default "Search Dumpster" option ([see the full guide](luxe_bindipping/README.md#installation)).
 6. Restart your server.
 
